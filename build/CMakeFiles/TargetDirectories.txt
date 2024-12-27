@@ -1,0 +1,3 @@
+/mnt/c/Users/Administrator/Desktop/Tasks/task/cpp/Task2_cpp/build/CMakeFiles/task2.dir
+/mnt/c/Users/Administrator/Desktop/Tasks/task/cpp/Task2_cpp/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/Administrator/Desktop/Tasks/task/cpp/Task2_cpp/build/CMakeFiles/rebuild_cache.dir
