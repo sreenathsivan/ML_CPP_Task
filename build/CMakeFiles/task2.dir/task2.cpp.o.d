@@ -324,4 +324,5 @@ CMakeFiles/task2.dir/task2.cpp.o: \
  /usr/include/c++/11/bits/fs_dir.h /usr/include/c++/11/bits/fs_ops.h \
  /usr/include/c++/11/optional /usr/include/c++/11/memory_resource \
  /usr/include/c++/11/bits/uses_allocator_args.h \
- /usr/include/c++/11/variant
+ /usr/include/c++/11/variant \
+ /mnt/c/Users/Administrator/Desktop/Tasks/task/cpp/Task2_cpp/process.h

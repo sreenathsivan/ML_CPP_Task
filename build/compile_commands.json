@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/mnt/c/Users/Administrator/Desktop/Tasks/task/cpp/Task2_cpp/build",
+  "command": "/usr/bin/g++  -I/mnt/c/Users/Administrator/Desktop/Tasks/task/cpp/Task2_cpp/include -g -o CMakeFiles/task2.dir/task2.cpp.o -c /mnt/c/Users/Administrator/Desktop/Tasks/task/cpp/Task2_cpp/task2.cpp",
+  "file": "/mnt/c/Users/Administrator/Desktop/Tasks/task/cpp/Task2_cpp/task2.cpp"
+}
+]

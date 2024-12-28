@@ -73,15 +73,15 @@ CMakeFiles/task2.dir/task2.cpp.o: CMakeFiles/task2.dir/flags.make
 CMakeFiles/task2.dir/task2.cpp.o: ../task2.cpp
 CMakeFiles/task2.dir/task2.cpp.o: CMakeFiles/task2.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Administrator/Desktop/Tasks/task/cpp/Task2_cpp/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/task2.dir/task2.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/task2.dir/task2.cpp.o -MF CMakeFiles/task2.dir/task2.cpp.o.d -o CMakeFiles/task2.dir/task2.cpp.o -c /mnt/c/Users/Administrator/Desktop/Tasks/task/cpp/Task2_cpp/task2.cpp
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/task2.dir/task2.cpp.o -MF CMakeFiles/task2.dir/task2.cpp.o.d -o CMakeFiles/task2.dir/task2.cpp.o -c /mnt/c/Users/Administrator/Desktop/Tasks/task/cpp/Task2_cpp/task2.cpp
 
 CMakeFiles/task2.dir/task2.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/task2.dir/task2.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Administrator/Desktop/Tasks/task/cpp/Task2_cpp/task2.cpp > CMakeFiles/task2.dir/task2.cpp.i
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Administrator/Desktop/Tasks/task/cpp/Task2_cpp/task2.cpp > CMakeFiles/task2.dir/task2.cpp.i
 
 CMakeFiles/task2.dir/task2.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/task2.dir/task2.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Administrator/Desktop/Tasks/task/cpp/Task2_cpp/task2.cpp -o CMakeFiles/task2.dir/task2.cpp.s
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Administrator/Desktop/Tasks/task/cpp/Task2_cpp/task2.cpp -o CMakeFiles/task2.dir/task2.cpp.s
 
 # Object files for target task2
 task2_OBJECTS = \

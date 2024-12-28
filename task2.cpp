@@ -16,7 +16,7 @@ class LinearLayer
 public:
     int inputSize = 0;
     int outputSize = 0;
-    float learningRate = 0.01f; // Default learning rate
+    float learningRate = 0.001f; // Default learning rate
     vector<vector<float>> weights;
     vector<float> biases;
     vector<vector<float>> lastInput; // Store input for backpropagation
@@ -63,14 +63,7 @@ public:
                 biase_broadcast[i][j] = this->biases[i];
             }
         }
-        // for (int i = 0; i < size(biase_broadcast); i++)
-        // {
-        //     for (int j = 0; j < biase_broadcast[0].size(); j++)
-        //     {
-        //         cout << this->biases[j] << "\t";
-        //     }
-        //     cout << "\n";
-        // }
+ 
         for (int i = 0; i < size(this->outputs); i++)
         {
             for (int j = 0; j < this->outputs[0].size(); j++)
@@ -120,10 +113,14 @@ public:
         // weight w1 updation
         //  Update weights and biases for the output layer
 
+        
+
+
         for (size_t i = 0; i < this->weights.size(); ++i)
         {
             for (size_t j = 0; j < this->weights[i].size(); ++j)
             {
+                // std::cout << "dw: " << dw[i][j] << std::endl;
                 this->weights[i][j] -= this->learningRate * this->dw[i][j]; // Gradient descent update
                 // this->weights[i][j] = 0;
             }
@@ -235,7 +232,7 @@ public:
         {
             for (int j = 0; j < this->outputSize; j++)
             {
-                this->weights[i][j] = static_cast<float>(rand()) / RAND_MAX * 0.01f; // Small random weights
+                this->weights[i][j] = static_cast<float>(rand()) / RAND_MAX * 0.0001f; // Small random weights
                 // cout << this->weights[i][j] << "\t";
             }
 
@@ -360,14 +357,17 @@ int main()
     // // Define a network with 8 input neurons, 2 hidden layers (3 and 2 neurons), and 1 output neuron
     // NeuralNetwork nn({8, 3, 3, 1});
 
-    process<int> p;
+    process<float> p;
     string path = "../pima-indians-diabetes.csv";
     auto data = p.CSV2VEC(path); // Call the CSV2VEC method on the instance
     auto X_raw = p.vector2DSlice(data, 0, size(data), 0, 7);
     auto Y = p.vector2DSlice(data, 0, size(data), 8, 8);
+    // auto X=X_raw;
     auto X = p.fit_transform(X_raw);
+
     const float trainRatio = 0.8;
     const int dataSize = size(X);
+
 
     const int trainSize = static_cast<int>(trainRatio * dataSize);
     const int testSize = dataSize - trainSize;
@@ -434,9 +434,17 @@ int main()
     LinearLayer input(8, 12);
     LinearLayer output_layer(12, 1);
     std::vector<float> loss_values;
+    std::vector<float> train_loss;
+    float initial_learning_rate = 0.001f;
+float decay_rate = 0.9f;  // Decay rate (e.g., 0.9 means reduce by 10% each time)
+int decay_step = 50;  
 
     for (int i = 0; i < epoch; i++)
     {
+    //        if (epoch % decay_step == 0 && epoch > 0) {
+    //     input.learningRate *= decay_rate;  // Apply decay to input layer
+    //     output_layer.learningRate *= decay_rate;  // Apply decay to output layer
+    // }
 
         int start = 0;
         int end = batch_size;
@@ -464,8 +472,8 @@ int main()
                 y_pred.push_back(sigmoid(out));
             }
             auto actual_output = ybatch;
-            auto loss = binaryCrossEntropy(actual_output, y_pred);
-            cout << loss << endl;
+            auto loss = binaryCrossEntropy(actual_output,(y_pred));
+            // cout << loss << endl;
             loss_values.push_back(loss);
             // Backward pass
             auto W1_grad = output_layer.backward(loss, ybatch, y_pred);
@@ -474,35 +482,48 @@ int main()
             input.update_weight_and_biase();
 
             // cout << "Batch start: " << start << ", end: " << end << endl;
-            start = end + 1;
+            start = end ;
         }
-        cout << "batch " << i + 1 << "batch loss " << loss_values[size(loss_values) - 1] << endl;
+        train_loss.push_back(loss_values[size(loss_values) - 1]);
+        cout << "epoch " << i + 1 << "epoch loss " << loss_values[size(loss_values) - 1] << endl;
     }
+
+        // Evaluate final model on the test set
+    vector<vector<float>> X_test_pred = input.forward(X_test);
+    auto activated_test_output = relu(X_test_pred);
+    auto test_output = output_layer.forward(activated_test_output);
+    vector<vector<float>> test_pred;
+    for (const auto &out : test_output)
+    {
+        test_pred.push_back(sigmoid(out));
+    }
+    auto test_loss = binaryCrossEntropy(y_test, test_pred);
+    cout << "Test Loss: " << test_loss << endl;
    
 
-    // FILE *gnuplot = popen("gnuplot -persistent", "w");
+    FILE *gnuplot = popen("gnuplot -persistent", "w");
 
-    // if (gnuplot)
-    // {
-    //     // Send gnuplot commands to plot the array directly
-    //     fprintf(gnuplot, "plot '-' with lines\n");
+    if (gnuplot)
+    {
+        // Send gnuplot commands to plot the array directly
+        fprintf(gnuplot, "plot '-' with lines\n");
 
-    //     // Send data points directly to gnuplot
-    //     for (size_t i = 0; i < loss_values.size(); ++i)
-    //     {
-    //         fprintf(gnuplot, "%zu %f\n", i + 1, loss_values[i]); // Plot index vs value
-    //     }
+        // Send data points directly to gnuplot
+        for (size_t i = 0; i < train_loss.size(); ++i)
+        {
+            fprintf(gnuplot, "%zu %f\n", i + 1, train_loss[i]); // Plot index vs value
+        }
 
-    //     // End the data input
-    //     fprintf(gnuplot, "e\n");
+        // End the data input
+        fprintf(gnuplot, "e\n");
 
-    //     // Close the pipe to gnuplot
-    //     fclose(gnuplot);
-    // }
-    // else
-    // {
-    //     std::cerr << "Error: Couldn't open gnuplot." << std::endl;
-    // }
+        // Close the pipe to gnuplot
+        fclose(gnuplot);
+    }
+    else
+    {
+        std::cerr << "Error: Couldn't open gnuplot." << std::endl;
+    }
 
     // exit(0);
 
